@@ -10,6 +10,7 @@
   ],
   "compilerOptions": {
     "jsx": "react-jsx",
+    "types": ["jest"],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "allowImportingTsExtentions": true,
