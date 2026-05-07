@@ -24,7 +24,7 @@ const axisMap = {
   stretch: 'stretch',
 } as const;
 
-const Alignment = ({
+export const Alignment = ({
   children,
   style,
   horizontal = 'center',
@@ -41,5 +41,3 @@ const Alignment = ({
     </View>
   );
 };
-
-export default Alignment;

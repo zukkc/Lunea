@@ -1,4 +1,4 @@
-import { OptionType } from '@/src/core/types/settings.types';
+import { OptionType } from '@/src/shared/settings/model/types';
 
 export const convertToOptionType = <T,>( 
   value: T,

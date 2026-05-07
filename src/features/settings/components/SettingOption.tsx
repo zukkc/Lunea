@@ -1,31 +1,31 @@
 import React from 'react';
-import { View, StyleSheet, ViewStyle, StyleProp } from 'react-native';
-import { WriteText } from '../../../core/components/ui/WriteText';
+import { View, StyleSheet } from 'react-native';
+import { WriteText } from '../../../shared/ui/WriteText';
 import { Dropdown } from 'react-native-element-dropdown';
-import BlurViewManager from '../../../core/components/ui/BlurViewManager';
+import { BlurViewManager } from '@/shared/ui';
 import { ChevronDown } from 'lucide-react-native';
-import type { OptionType } from '@/src/core/types/settings.types';
 
+import type { OptionType } from '@/shared/settings/types';
 import type { LucideIcon } from 'lucide-react-native';
 
 type SettingOptionProps<T> = {
   show?: boolean;
-  value?: OptionType<T>;
+  value?: T;
   data?: Array<OptionType<T>>;
   title: string;
   LeftIcon?: LucideIcon;
   leftIconSize?: number;
-  setValue: (value: T) => void;
+  onChange: (value: T) => void;
 };
 
 const SettingOption = <T,>({
   show = true,
   value,
   data,
-  title = 'TITLE',
+  title,
   LeftIcon,
   leftIconSize = 30,
-  setValue,
+  onChange,
 }: SettingOptionProps<T>): React.JSX.Element | null => {
   if (!show || !data?.length) return null;
 
@@ -35,6 +35,14 @@ const SettingOption = <T,>({
       <LeftIcon style={styles.icon} color={'#aaaaaa'} size={leftIconSize} />
     );
   };
+  
+  const findLabelfromValue = (val: T | undefined): string => {
+    const option = data.find(el => el.value === val) 
+    if (option)
+      return option.label
+    else
+      return 'error'
+  }
 
   return (
     <View style={styles.container}>
@@ -63,10 +71,10 @@ const SettingOption = <T,>({
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder={value?.label ?? '...'}
-          value={value?.value}
+          placeholder={findLabelfromValue(value)}
+          value={value}
           onChange={(item: OptionType<T>) => {
-            setValue(item.value);
+            onChange(item.value);
           }}
           renderRightIcon={() => (
               <ChevronDown style={styles.icon} color={'#aaaaaa'} size={25} />

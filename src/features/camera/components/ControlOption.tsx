@@ -1,5 +1,5 @@
-import Rounded from '../../../core/components/ui/Rounded';
-import BlurViewManager from '../../../core/components/ui/BlurViewManager';
+import { Rounded } from '@/shared/ui';
+import { BlurViewManager } from '@/shared/ui';
 import { Pressable } from 'react-native';
 import { LucideIcon } from 'lucide-react-native';
 

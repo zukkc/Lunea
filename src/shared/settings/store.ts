@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { createMMKV } from 'react-native-mmkv';
-import { SettingsState } from '@/src/core/types/settings.types';
+import { SettingsState } from '@/shared/settings/types';
 
 const mmkv = createMMKV({ id: 'settings' });
 
 export const useSettingsStore = create<SettingsState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       photoQuality: 'speed',
       changePhotoQuality: qualityValue =>
         set(() => ({ photoQuality: qualityValue })),
@@ -17,13 +17,8 @@ export const useSettingsStore = create<SettingsState>()(
           cameraPosition: position
             ? position
             : state.cameraPosition === 'back'
-            ? 'front'
-            : 'back',
-        })),
-      deviceIdByPosition: { front: null, back: null, external: null },
-      setDeviceIdForPosition: (position, id) =>
-        set(() => ({
-          deviceIdByPosition: { ...get().deviceIdByPosition, [position]: id },
+              ? 'front'
+              : 'back',
         })),
     }),
     {
@@ -36,7 +31,6 @@ export const useSettingsStore = create<SettingsState>()(
       partialize: state => ({
         photoQuality: state.photoQuality,
         cameraPosition: state.cameraPosition,
-        deviceIdByPosition: state.deviceIdByPosition,
       }),
     },
   ),

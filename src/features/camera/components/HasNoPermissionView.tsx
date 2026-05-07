@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Button } from 'react-native';
-import { WriteText } from '../../../core/components/ui/WriteText';
+import { WriteText } from '../../../shared/ui/WriteText';
 import { Linking } from 'react-native';
 import { Settings } from 'lucide-react-native';
 

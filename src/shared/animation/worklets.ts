@@ -1,9 +1,8 @@
 import { withTiming } from "react-native-reanimated";
-import { scheduleOnUI, scheduleOnRN } from "react-native-worklets";
+import { scheduleOnUI, scheduleOnRN, isUIRuntime } from "react-native-worklets";
 
 import type { SharedValue } from "react-native-reanimated";
-import type { OptionalCB } from "../types/general.types"; 
-
+import type { OptionalCB } from "../types/common";
 
 type AnimateOpts = {
   duration?: number;
@@ -11,28 +10,28 @@ type AnimateOpts = {
 };
 
 export const animateUI = (
-  schedule: 'schedule' | 'direct',
   sv: SharedValue<number>,
-  delta: number,
+  value: number,
   opts: AnimateOpts = {},
   cb?: OptionalCB
 ) => {
   'worklet';
-  // bezpieczne domyślne
   const { duration = 100, increment = false } = opts;
 
-  const worklet = () => {
+  const animation = () => {
     'worklet'
 
     sv.value = withTiming(
-      delta + (increment ? sv.value : 0),
-      { duration }, // zawsze liczba
+      value + (increment ? sv.value : 0),
+      { duration },
       (finished) => {
         if (finished && cb) scheduleOnRN(cb);
       }
     );
   }
 
-  if (schedule === 'schedule') scheduleOnUI(worklet); 
-  else if (schedule === 'direct') worklet() 
+  if (isUIRuntime())
+    animation()
+  else
+    scheduleOnUI(animation);
 };

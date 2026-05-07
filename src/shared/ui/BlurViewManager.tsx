@@ -17,7 +17,7 @@ type BlurViewManagerProps = React.PropsWithChildren<{
   blurAmount?: number
 }>
 
-const BlurViewManager = ({ 
+export const BlurViewManager = ({ 
   children,
   style = StyleSheet.absoluteFill,
   type = 'liquidGlass',
@@ -59,5 +59,3 @@ const BlurViewManager = ({
   )
   }
 }
-
-export default BlurViewManager

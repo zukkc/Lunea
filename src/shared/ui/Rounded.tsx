@@ -6,7 +6,7 @@ type Props = React.PropsWithChildren<{
   rounded?: number;
 }>;
 
-const Rounded = ({ children, style, rounded = 100, ...rest }: Props) => {
+export const Rounded = ({ children, style, rounded = 100, ...rest }: Props) => {
   return (
     <View
       style={[
@@ -24,5 +24,3 @@ const Rounded = ({ children, style, rounded = 100, ...rest }: Props) => {
     </View>
   );
 };
-
-export default Rounded;

@@ -1,63 +1,48 @@
 import { View } from 'react-native';
 import React from 'react';
 import {
-  useCameraFormat,
   Camera as VisionCamera,
 } from 'react-native-vision-camera';
 
 import Controls from '../components/Controls';
 import HasNoPermissionView from '../components/HasNoPermissionView';
-import AssetPreview from '../components/AssetPreview.tsx';
-import CameraGestureHandler from '../components/CameraGestureHandler.tsx';
+import AssetPreview from '../components/AssetPreview';
+import CameraGestureHandler from '../components/CameraGestureHandler';
 
-import { useCamera } from '../../../core/hooks/cameraHooks.ts';
-import { useSettings } from '../../../core/hooks/settingsHooks.ts';
-import { useSetupCameraDevice } from '../hooks/useSetupCameraDevice.ts';
+import { useCameraStore } from '../store/camera.store';
+import { useCameraCapture } from '../hooks/useCameraCapture';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useCameraAndMicPermission } from '../hooks/useCameraAndMicPermission.ts';
-import { useDeactivateCamera } from '../hooks/useDeactivateCamera.ts';
-import { useSetPreviewDimensions } from '../hooks/useSetPreviewDimensions.ts';
+import { useCameraAndMicPermission } from '../hooks/useCameraAndMicPermission';
+import { useSetupCameraDevice } from '../hooks/useSetupCameraDevice';
+import { useCameraZoom } from '../hooks/useCameraZoom';
+
+// DEFAULT ZOOM VALUE
+const DEFAULT_ZOOM = 2
 
 const Camera = (): React.JSX.Element => {
   // TODO: SPRAWDZIC CZEMU KOMPONETENT PRZY ROBIENIU ZDJECIA REDNERUJE SIE 2 RAZY
-
   // ZWRACA WYSOKOSC DOLNEGO PRZYCISKU NAVIGACJI W TELEFONIE
   const { bottom: bottomNavHeight } = useSafeAreaInsets();
 
   // ====================== KAMERA ================== //
 
-  // SPRAWDZA CZY NADANE SA PERMISJE (W PRZYPADKU GDY NIE TO O NIE PROSI) I ZWRACA WYNIK
+  // HOOK ZAJMUJACY SIE OBLSUGA KAMERY JAK ROBIENIE ZDJEC I FILMOW
+  const { outputs, asset, takePhoto } = useCameraCapture();
+
+  // SPRAWDZA CZY NADANE SA PERMISJE
   const { isPermissionsGranted } = useCameraAndMicPermission();
 
-  // USTAWIA ALBO AUTOMATYCZNIE NAJLEPSZE URZADZENIE ALBO UZYWA WCZESNIEJ WYBRANEGO
+  //SPRAWDZA CZY KAMERA POWINNA BYC AKTYWOWANA
+  const isCameraActive = useCameraStore(s => s.isActive);
+
+  // USTAWIA ALBO AUTOMATYCZNIE NAJLEPSZE URZADZENIE
   const device = useSetupCameraDevice();
 
-  // cameraRef - USTAWIA REF NA KAMERZE DLA POZNIEJSZEGO UZYWANIA NP. cameraRef.takePhoto()
-  // isCameraActive - SPRAWDZA I ODDAJE WYNIK CZY KAMERA POWINNA BYC AKTYWOWANA
-  // asset - ZWRACA ASSET LUB NULL JEZELI ASSET ISNIEJE (ZDJECIE / VIDEO)
-  const {
-    setRef,
-    isActive: isCameraActive,
-    photo: asset,
-  } = useCamera('setRef', 'isActive', 'photo');
-
-  // TESTOWO
-  const format = useCameraFormat(device || undefined, [
-    { photoAspectRatio: 16 / 9 },
-  ]);
-
-  // AKTYWUJE LUB DESAKTYWUJE KAMERE PRZY WEJSCIU LUB WYJSCIU Z NIEJ
-  useDeactivateCamera();
-
-  // USTAWIA CONSTANTS WARTOSCI JAKIE SA DLA DANEGO WYSWIETLACZA TAKIE JAK WYSOKOSCI ITD
-  useSetPreviewDimensions();
-
-  // ======================== USTAWIENIA ========================== //
-
-  // ZWRACA JAKOSC (KTORA JEST ZAPISANA W USTAWIENIACH) W JAKIEJ MAJA BYC ROBIONE ZDJECIA
-  const { photoQuality } = useSettings('photoQuality');
-
-  // ============================================================== //
+  const { zoom, setZoom } = useCameraZoom({ 
+    initialZoom: DEFAULT_ZOOM, 
+    minZoom: device?.minZoom, 
+    maxZoom: device?.maxZoom 
+  });
 
   // SPRAWDZA CZY PERMISJE ZOSTALY NADANE
   if (!isPermissionsGranted) {
@@ -69,24 +54,47 @@ const Camera = (): React.JSX.Element => {
     return <View />;
   }
 
+  console.log('SELECTED DEVICE', {
+    id: device?.id,
+    type: device?.type,
+    position: device?.position,
+    isVirtualDevice: device?.isVirtualDevice,
+    physicalDevices: device?.physicalDevices,
+    minZoom: device?.minZoom,
+    maxZoom: device?.maxZoom,
+    zoomLensSwitchFactors: device?.zoomLensSwitchFactors,
+  })
+
   return (
     <View style={{ flex: 1, marginBottom: bottomNavHeight }}>
-      <CameraGestureHandler tabBarSwipeSpeed={1200} controlsSwipeSpeed={1200}>
+      <CameraGestureHandler
+        onSetZoom={setZoom}
+        tabBarSwipeSpeed={1200}
+        controlsSwipeSpeed={1200}
+      >
         <VisionCamera
-          ref={setRef}
           device={device}
-          format={format}
           style={{ flex: 1 }}
           resizeMode="contain"
           isActive={isCameraActive}
-          photo={true}
-          video={true}
-          audio={true}
-          photoQualityBalance={photoQuality}
+          outputs={outputs}
+          constraints={[
+            { resolutionBias: outputs[0] }, // index 0 is cameraOutput
+            { resolutionBias: outputs[1] }, // index 1 is photoOutput
+            { fps: 30 }
+          ]}
+          zoom={zoom}
         />
       </CameraGestureHandler>
-      <Controls />
-      {asset && <AssetPreview asset={asset} />}
+      <Controls
+        onTakePhoto={takePhoto}
+      />
+      {
+        asset &&
+        <AssetPreview
+          asset={asset}
+        />
+      }
     </View>
   );
 };

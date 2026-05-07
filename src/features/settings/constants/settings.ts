@@ -1,6 +1,6 @@
-import { PhotoQuality } from "@/src/core/types/camera.types";
+import { QualityPrioritization } from "react-native-vision-camera";
 
-export const PHOTO_QUALITY: PhotoQuality[] = [
+export const PHOTO_QUALITY: QualityPrioritization[] = [
   'speed',
   'balanced',
   'quality',

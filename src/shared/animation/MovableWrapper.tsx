@@ -8,19 +8,21 @@ type MovableWrapperProps = React.PropsWithChildren<{
   style?: StyleProp<ViewStyle>
   xValue?: SharedValue<number>
   yValue?: SharedValue<number>
+  opacity?: SharedValue<number>
 }>
 
-const MovableWrapper = ({ children, style, xValue, yValue}: MovableWrapperProps): React.JSX.Element => {
+const MovableWrapper = ({ children, style, xValue, yValue, opacity }: MovableWrapperProps): React.JSX.Element => {
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [
       { translateX: xValue ? xValue.value : 0 },
       { translateY: yValue ? yValue.value : 0 }
-    ]      
+    ],
+    opacity: opacity ? opacity.value : 1
   }))
 
   return (
     <Animated.View
-      style={[ style, animatedStyle ]}
+      style={[style, animatedStyle]}
     >
       {children}
     </Animated.View>

@@ -1,79 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Pressable, View, StyleSheet } from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-} from 'react-native-reanimated';
-import { NitroImage, loadImage } from 'react-native-nitro-image';
+import { NitroImage } from 'react-native-nitro-image';
 import { XIcon } from 'lucide-react-native';
 
-import { useCamera } from '@/src/core/hooks/cameraHooks';
-
-import type { PhotoFile, VideoFile } from 'react-native-vision-camera';
+import { CapturedAsset } from '@/src/shared/camera/types';
 
 type AssetPreviewProps = {
-  asset: PhotoFile | VideoFile;
+  asset: CapturedAsset;
 };
 
-type LoadedImage = Awaited<ReturnType<typeof loadImage>>;
-
 const AssetPreview = ({ asset }: AssetPreviewProps): React.JSX.Element => {
-  const [image, setImage] = useState<LoadedImage | null>(null);
-  const { deleteTempAsset } = useCamera('deleteTempAsset');
-
-  const opacity = useSharedValue(0);
-  const animatedStyle = useAnimatedStyle(() => ({ opacity: opacity.value }));
-
-  // Preload obrazu
-  useEffect(() => {
-    let cancelled = false;
-    setImage(null); // reset na nowe asset.path
-    opacity.value = 0; // zresetuj animację
-
-    (async () => {
-      try {
-        const img: LoadedImage = await loadImage({ filePath: asset.path });
-        if (!cancelled) setImage(img);
-      } catch (err: unknown) {
-        // typ-bezpieczny catch
-        if (err instanceof Error) {
-          console.error('loadImage error:', err.message);
-        } else {
-          console.error('loadImage error:', err);
-        }
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [asset.path, opacity]);
-
-  useEffect(() => {
-    if (image) {
-      opacity.value = withTiming(1, { duration: 140 });
-    }
-  }, [image, opacity]);
-
   return (
-    <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
-      {image && (
-        <Animated.View
-          style={[StyleSheet.absoluteFillObject, animatedStyle]}
-          pointerEvents="none"
+    <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
+      {asset.type === "photo" && (
+        <View
+          style={StyleSheet.absoluteFill}
         >
           <NitroImage
-            style={StyleSheet.absoluteFillObject}
+            style={StyleSheet.absoluteFill}
             resizeMode="contain"
-            image={image}
+            image={asset.image}
             pointerEvents="none"
           />
-        </Animated.View>
+        </View>
       )}
 
       <Pressable
-        onPress={deleteTempAsset}
+        onPress={() => console.log("wywolac metode dispose")}
         style={{ position: 'absolute', top: 12, zIndex: 10, padding: 8 }}
         hitSlop={10}
       >
