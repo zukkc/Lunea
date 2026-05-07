@@ -5,13 +5,15 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { BlurViewManager } from '@/shared/ui';
 import { ChevronDown } from 'lucide-react-native';
 
+import { useTranslation } from 'react-i18next';
+
 import type { OptionType } from '@/shared/settings/types';
 import type { LucideIcon } from 'lucide-react-native';
 
 type SettingOptionProps<T> = {
   show?: boolean;
-  value?: T;
-  data?: Array<OptionType<T>>;
+  value: T;
+  data: Array<OptionType<T>>;
   title: string;
   LeftIcon?: LucideIcon;
   leftIconSize?: number;
@@ -27,7 +29,15 @@ const SettingOption = <T,>({
   leftIconSize = 30,
   onChange,
 }: SettingOptionProps<T>): React.JSX.Element | null => {
-  if (!show || !data?.length) return null;
+  const { t } = useTranslation();
+
+  const translatedData = React.useMemo(() =>
+    data.map(option => ({
+      ...option,
+      label: t(option.i18nKey),
+    })),
+    [data, t],
+  );
 
   const renderLeftIcon = (): React.JSX.Element | null => {
     if (!LeftIcon) return null;
@@ -35,14 +45,17 @@ const SettingOption = <T,>({
       <LeftIcon style={styles.icon} color={'#aaaaaa'} size={leftIconSize} />
     );
   };
-  
+
   const findLabelfromValue = (val: T | undefined): string => {
-    const option = data.find(el => el.value === val) 
+    const option = translatedData.find(el => el.value === val)
+    console.log(translatedData)
     if (option)
       return option.label
     else
       return 'error'
   }
+
+  if (!show) return null;
 
   return (
     <View style={styles.container}>
@@ -63,7 +76,7 @@ const SettingOption = <T,>({
           containerStyle={styles.listStyle}
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
-          selectedTextProps={{numberOfLines: 1, ellipsizeMode: 'tail'}}
+          selectedTextProps={{ numberOfLines: 1, ellipsizeMode: 'tail' }}
           activeColor='rgba(0,0,0,0.3)'
           fontFamily="Exo2-regular"
           data={data}
@@ -77,19 +90,19 @@ const SettingOption = <T,>({
             onChange(item.value);
           }}
           renderRightIcon={() => (
-              <ChevronDown style={styles.icon} color={'#aaaaaa'} size={25} />
-            )
+            <ChevronDown style={styles.icon} color={'#aaaaaa'} size={25} />
+          )
           }
           renderItem={(item: OptionType<T>) => (
-              <View style={styles.itemStyle}>
-                <BlurViewManager
-                  type="blur"
-                  blurType="prominent"
-                  blurAmount={40}
-                />
-                <WriteText style={styles.itemText}>{item.label}</WriteText>
-              </View>
-            )
+            <View style={styles.itemStyle}>
+              <BlurViewManager
+                type="blur"
+                blurType="prominent"
+                blurAmount={40}
+              />
+              <WriteText style={styles.itemText}>{findLabelfromValue(item.value)}</WriteText>
+            </View>
+          )
           }
         />
       </View>

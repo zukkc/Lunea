@@ -8,7 +8,7 @@ export type SettingsState = {
 };
 
 export type OptionType<T> = {
-  label: string;
+  i18nKey: string;
   value: T;
 };
 

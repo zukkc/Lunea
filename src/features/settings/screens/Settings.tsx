@@ -13,7 +13,8 @@ import { useMakeSetting } from '../hooks/useMakeSetting';
 
 const Settings = () => {
   const changePhotoQuality = useSettingsStore(s => s.changePhotoQuality)
-  const photoQualityData = useMakeSetting(PHOTO_QUALITY)
+  const photoQualityData = useMakeSetting(PHOTO_QUALITY, 'settings.photoQuality')
+  console.log(photoQualityData)
 
   return (
     <SafeAreaView
@@ -39,7 +40,7 @@ const Settings = () => {
             backgroundColor: '#3A3A3A',
           }}
         >
-          <SettingOption
+          <SettingOption<QualityPrioritization>
             title="jakosc"
             value={'speed' as QualityPrioritization}
             data={photoQualityData}
