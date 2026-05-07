@@ -2,91 +2,91 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "src/core/assets/fonts/Exo_2/Exo2-Italic-VariableFont_wght.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/Exo2-Italic-VariableFont_wght.ttf",
       "sha1": "1e8d1bfd7f7ca2de2037a72f8cd6088b790c4855"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/Exo2-VariableFont_wght.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/Exo2-VariableFont_wght.ttf",
       "sha1": "d82e5c7acb5781993f05a84f2d188c2e9b4dc35c"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/OFL.txt",
+      "path": "src/shared/assets/fonts/Exo_2/OFL.txt",
       "sha1": "14c7521083c3baa94ac37a16ea96c036c3042c8d"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/README.txt",
+      "path": "src/shared/assets/fonts/Exo_2/README.txt",
       "sha1": "88c8623ae59620b5b930a7d87902ef313bf2275d"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-Black.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-Black.ttf",
       "sha1": "e1afcb6b70759eb4a22235f0cbd4a1d6878adc04"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-BlackItalic.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-BlackItalic.ttf",
       "sha1": "9ade6f0536c200e57ef1275fa515da7f0f4b1b89"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-Bold.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-Bold.ttf",
       "sha1": "ca2a0f4b9b2fe1c3976f43d0e2869d5fb5e21c75"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-BoldItalic.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-BoldItalic.ttf",
       "sha1": "4fddf5dbead79db8338a4bfc626d75e70f416e9b"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-ExtraBold.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-ExtraBold.ttf",
       "sha1": "095b02e791c348cc726ca4d471d1af772b5605d2"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-ExtraBoldItalic.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-ExtraBoldItalic.ttf",
       "sha1": "50261871f8460743d0f525f9d6408bfcbdccf9e9"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-ExtraLight.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-ExtraLight.ttf",
       "sha1": "f9be9af694b573cb8519432b969fa23cf03e2101"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-ExtraLightItalic.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-ExtraLightItalic.ttf",
       "sha1": "d3f32a6e838bb46a63915983224b32f6b27100ea"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-Italic.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-Italic.ttf",
       "sha1": "2130aba764695c9f38e44685f748f470ad732e96"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-Light.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-Light.ttf",
       "sha1": "7e062a12039509259c649dd339ce5810d58cf99e"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-LightItalic.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-LightItalic.ttf",
       "sha1": "00f6c466198cb92968c70d8e9ec7b6893e7c78f8"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-Medium.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-Medium.ttf",
       "sha1": "37fe460576ccbfd3231b47c80ca2250cda4af097"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-MediumItalic.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-MediumItalic.ttf",
       "sha1": "f30a8f3268a9cc8708e86b929e4b9f8416cbb28c"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-Regular.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-Regular.ttf",
       "sha1": "565acdf5811c71ba0164cc0d33244d4f852db6af"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-SemiBold.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-SemiBold.ttf",
       "sha1": "e9c324efbd91478b280c406daf0e30029bf411f7"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-SemiBoldItalic.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-SemiBoldItalic.ttf",
       "sha1": "eed97b18c5ee7d37bf3f25fc6ae14ebb5505efdf"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-Thin.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-Thin.ttf",
       "sha1": "fad55b36934dade413c5a6bb36457298d1db26f7"
     },
     {
-      "path": "src/core/assets/fonts/Exo_2/static/Exo2-ThinItalic.ttf",
+      "path": "src/shared/assets/fonts/Exo_2/static/Exo2-ThinItalic.ttf",
       "sha1": "cfa2d6304933a95a7b526ef3ca7dc459a0879e72"
     }
   ]
