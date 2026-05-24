@@ -11,20 +11,18 @@ import type { OptionType } from '@/shared/settings/types';
 import type { LucideIcon } from 'lucide-react-native';
 
 type SettingOptionProps<T> = {
-  show?: boolean;
   value: T;
   data: Array<OptionType<T>>;
-  title: string;
+  titleKey: string;
   LeftIcon?: LucideIcon;
   leftIconSize?: number;
   onChange: (value: T) => void;
 };
 
 const SettingOption = <T,>({
-  show = true,
   value,
   data,
-  title,
+  titleKey,
   LeftIcon,
   leftIconSize = 30,
   onChange,
@@ -38,6 +36,10 @@ const SettingOption = <T,>({
     })),
     [data, t],
   );
+  
+  const translatedTitle = React.useMemo(() => {
+    return t(titleKey);
+  }, [titleKey, t]) 
 
   const renderLeftIcon = (): React.JSX.Element | null => {
     if (!LeftIcon) return null;
@@ -48,15 +50,12 @@ const SettingOption = <T,>({
 
   const findLabelfromValue = (val: T | undefined): string => {
     const option = translatedData.find(el => el.value === val)
-    console.log(translatedData)
     if (option)
       return option.label
     else
       return 'error'
   }
-
-  if (!show) return null;
-
+  
   return (
     <View style={styles.container}>
       <View
@@ -67,7 +66,7 @@ const SettingOption = <T,>({
         }}
       >
         {renderLeftIcon()}
-        <WriteText style={styles.titleText}>{title}</WriteText>
+        <WriteText style={styles.titleText}>{translatedTitle}</WriteText>
       </View>
 
       <View style={styles.dropDownContainer}>
@@ -79,12 +78,11 @@ const SettingOption = <T,>({
           selectedTextProps={{ numberOfLines: 1, ellipsizeMode: 'tail' }}
           activeColor='rgba(0,0,0,0.3)'
           fontFamily="Exo2-regular"
-          data={data}
+          data={translatedData}
           showsVerticalScrollIndicator={false}
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder={findLabelfromValue(value)}
           value={value}
           onChange={(item: OptionType<T>) => {
             onChange(item.value);
@@ -145,15 +143,6 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 5,
   },
-  label: {
-    position: 'absolute',
-    backgroundColor: 'white',
-    left: 22,
-    top: 8,
-    zIndex: 999,
-    paddingHorizontal: 8,
-    fontSize: 14,
-  },
   dropdown: {
     padding: 10,
   },
@@ -163,6 +152,8 @@ const styles = StyleSheet.create({
   },
   selectedTextStyle: {
     fontSize: 16,
-    color: "#dddddd"
+    color: "#dddddd",
+    textAlign: 'right',
+    marginRight: 5,
   },
 });

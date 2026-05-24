@@ -12,9 +12,9 @@ import { QualityPrioritization } from 'react-native-vision-camera';
 import { useMakeSetting } from '../hooks/useMakeSetting';
 
 const Settings = () => {
+  const photoQuality = useSettingsStore(s => s.photoQuality)
   const changePhotoQuality = useSettingsStore(s => s.changePhotoQuality)
-  const photoQualityData = useMakeSetting(PHOTO_QUALITY, 'settings.photoQuality')
-  console.log(photoQualityData)
+  const [title, photoQualityData] = useMakeSetting(PHOTO_QUALITY, 'settings.photoQuality')
 
   return (
     <SafeAreaView
@@ -41,8 +41,8 @@ const Settings = () => {
           }}
         >
           <SettingOption<QualityPrioritization>
-            title="jakosc"
-            value={'speed' as QualityPrioritization}
+            titleKey={title}
+            value={photoQuality}
             data={photoQualityData}
             onChange={quality => changePhotoQuality(quality)}
             LeftIcon={ChartSplineIcon}
