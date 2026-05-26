@@ -20,3 +20,5 @@ export type CapturedAsset =
 export type Video = string
 
 export type CameraKey = keyof CameraState;
+
+export type CameraDevicePreference = 'fast' | 'balanced' | 'quality'

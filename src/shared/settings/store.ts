@@ -8,6 +8,10 @@ const mmkv = createMMKV({ id: 'settings' });
 export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
+      devicePreference: 'quality',
+      changeDevicePreference: preference =>
+        set(() => ({ devicePreference: preference }))
+      ,
       photoQuality: 'speed',
       changePhotoQuality: qualityValue =>
         set(() => ({ photoQuality: qualityValue })),
@@ -29,6 +33,7 @@ export const useSettingsStore = create<SettingsState>()(
         removeItem: (key: string): boolean => mmkv.remove(key),
       })),
       partialize: state => ({
+        devicePreference: state.devicePreference,
         photoQuality: state.photoQuality,
         cameraPosition: state.cameraPosition,
       }),
