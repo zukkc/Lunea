@@ -7,6 +7,12 @@ export const en = {
       quality: 'Quality',
       custom: 'Custom'
     },
+    general: {
+      title: "General",
+      fps: {
+        title: "FPS"
+      }
+    },
     photo: {
       title: "Photo Settings",
       quality: {

@@ -4,10 +4,10 @@ import Divider from '../components/Divider';
 import SettingOption from '../components/SettingOption';
 import ProfileButton from '../components/ProfileButton';
 import { Rounded, WriteText } from '@/shared/ui';
-import { ChartSplineIcon } from 'lucide-react-native';
+import { ChartSplineIcon, ActivityIcon } from 'lucide-react-native';
 
 import { useSettingsStore } from '@/shared/settings/store';
-import { useMakeSetting } from '../hooks/useMakeSetting';
+import { makeSetting } from '../utils/utils';
 import { useTranslation } from 'react-i18next';
 
 import { PHOTO_QUALITY } from '../constants/constants';
@@ -15,18 +15,26 @@ import type { QualityPrioritization } from 'react-native-vision-camera';
 
 const Settings = () => {
   const { t } = useTranslation();
+  const deviceSnapshot = useSettingsStore(s => s.deviceSnapshot);
 
   const devicePreference = useSettingsStore(s => s.devicePreference);
   const changeDevicePreference = useSettingsStore(s => s.changeDevicePreference)
+  
+  const fps = useSettingsStore(s => s.fps);
+  const setFps = useSettingsStore(s => s.setFps);
 
   const photoQuality = useSettingsStore(s => s.photoQuality)
   const changePhotoQuality = useSettingsStore(s => s.changePhotoQuality)
-  const [title, photoQualityData] = useMakeSetting(PHOTO_QUALITY, 'settings.photo.quality')
+
+  if (!deviceSnapshot) return;
+
+  const [fpsTitleKey, availableFps] = makeSetting(deviceSnapshot.supportedFpsValues, 'settings.general.fps')
+  const [photoTitleKey, photoQualityData] = makeSetting(PHOTO_QUALITY, 'settings.photo.quality')
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-      
+
         {/*///////////////////PROFILE_SETTINGS////////////////////////////*/}
 
         <WriteText
@@ -35,7 +43,7 @@ const Settings = () => {
           {t('settings.profiles.title')}
         </WriteText>
 
-        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 15 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginVertical: 15 }}>
           <ProfileButton
             title={t('settings.profiles.speed')}
             active={devicePreference === 'fast'}
@@ -52,6 +60,27 @@ const Settings = () => {
             onPress={() => changeDevicePreference('quality')}
           />
         </View>
+        
+        <WriteText
+          style={styles.optionsGroupTitle}
+        >
+          {t('settings.general.title')}
+        </WriteText>
+
+        <Rounded
+          rounded={30}
+          style={styles.optionContainer}
+        >
+          <SettingOption<number>
+            titleKey={fpsTitleKey}
+            value={fps}
+            data={availableFps}
+            rawData={true}
+            onChange={fps => setFps(fps)}
+            LeftIcon={ActivityIcon}
+            leftIconSize={22}
+          />
+        </Rounded>
 
         {/*///////////////////PHOTO_SETTINGS////////////////////////////*/}
 
@@ -66,7 +95,7 @@ const Settings = () => {
           style={styles.optionContainer}
         >
           <SettingOption<QualityPrioritization>
-            titleKey={title}
+            titleKey={photoTitleKey}
             value={photoQuality}
             data={photoQualityData}
             onChange={quality => changePhotoQuality(quality)}

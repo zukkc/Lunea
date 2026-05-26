@@ -15,6 +15,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCameraAndMicPermission } from '../hooks/useCameraAndMicPermission';
 import { useSetupCameraDevice } from '../hooks/useSetupCameraDevice';
 import { useCameraZoom } from '../hooks/useCameraZoom';
+import { useSyncCameraDeviceSnapshot } from '../hooks/useSyncCameraDeviceSnapshot';
+import { useSettingsStore } from '@/shared/settings/store';
 
 // DEFAULT ZOOM VALUE
 const DEFAULT_ZOOM = 2
@@ -37,6 +39,12 @@ const Camera = (): React.JSX.Element => {
 
   // USTAWIA ALBO AUTOMATYCZNIE NAJLEPSZE URZADZENIE
   const device = useSetupCameraDevice();
+  
+  // SYNC DEVICE SNAPSHOT FOR SETTIGNS
+  useSyncCameraDeviceSnapshot(device) 
+
+  // SETTINGS
+  const chosenFps = useSettingsStore(s => s.fps); 
 
   const { zoom, setZoom } = useCameraZoom({ 
     initialZoom: DEFAULT_ZOOM, 
@@ -81,7 +89,7 @@ const Camera = (): React.JSX.Element => {
           constraints={[
             { resolutionBias: outputs[0] }, // index 0 is cameraOutput
             { resolutionBias: outputs[1] }, // index 1 is photoOutput
-            { fps: 30 }
+            { fps: chosenFps }
           ]}
           zoom={zoom}
         />

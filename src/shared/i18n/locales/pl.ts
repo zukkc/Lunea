@@ -7,8 +7,14 @@ export const pl = {
       quality: 'Jakość',
       custom: 'Własny'
     },
+    general: {
+      title: "Ogólne",
+      fps: {
+        title: "FPS"
+      }
+    },
     photo: {
-      title: 'Ustawienia zdjęć',
+      title: 'zdjęcia',
       quality: {
         title: 'Jakość zdjęć',
         speed: 'Szybkość',

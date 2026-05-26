@@ -1,7 +1,11 @@
-import { OptionType } from '@/src/shared/settings/model/types';
+import { OptionType } from "@/shared/settings/types";
 
-export const convertToOptionType = <T,>( 
-  value: T,
-): OptionType<T> => {
-  return { label: String(value), value: value };
-};
+export const makeSetting = <T>(data: T[], i18nKey: string): [string, OptionType<T>[]] => {
+    const setting =
+        data.map(el => ({
+            i18nKey: `${i18nKey}.${el}`,
+            value: el
+        }))
+
+    return [`${i18nKey}.title`, setting]
+}

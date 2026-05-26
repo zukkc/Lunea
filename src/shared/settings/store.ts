@@ -10,8 +10,13 @@ export const useSettingsStore = create<SettingsState>()(
     (set) => ({
       devicePreference: 'quality',
       changeDevicePreference: preference =>
-        set(() => ({ devicePreference: preference }))
-      ,
+        set(() => ({ devicePreference: preference })),
+      deviceSnapshot: null,
+      setDeviceSnapshot: snapshot =>
+        set(() => ({ deviceSnapshot: snapshot })),
+      fps: 30,
+      setFps: (fps) =>
+        set({ fps: fps }),
       photoQuality: 'speed',
       changePhotoQuality: qualityValue =>
         set(() => ({ photoQuality: qualityValue })),
@@ -34,6 +39,7 @@ export const useSettingsStore = create<SettingsState>()(
       })),
       partialize: state => ({
         devicePreference: state.devicePreference,
+        fps: state.fps,
         photoQuality: state.photoQuality,
         cameraPosition: state.cameraPosition,
       }),

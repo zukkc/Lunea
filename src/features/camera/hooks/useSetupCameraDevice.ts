@@ -12,6 +12,6 @@ export const useSetupCameraDevice = () => {
     const device = useCameraDevice(position, {
         physicalDevices: preferedPhysicalDevices 
     });
-
+    
     return device;
 }
