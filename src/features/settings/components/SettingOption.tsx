@@ -13,6 +13,7 @@ import type { LucideIcon } from 'lucide-react-native';
 type SettingOptionProps<T> = {
   value: T;
   data: Array<OptionType<T>>;
+  rawData?: boolean
   titleKey: string;
   LeftIcon?: LucideIcon;
   leftIconSize?: number;
@@ -22,6 +23,7 @@ type SettingOptionProps<T> = {
 const SettingOption = <T,>({
   value,
   data,
+  rawData = false,
   titleKey,
   LeftIcon,
   leftIconSize = 30,
@@ -32,7 +34,7 @@ const SettingOption = <T,>({
   const translatedData = React.useMemo(() =>
     data.map(option => ({
       ...option,
-      label: t(option.i18nKey),
+      label: rawData ? option.value: t(option.i18nKey),
     })),
     [data, t],
   );
@@ -51,7 +53,7 @@ const SettingOption = <T,>({
   const findLabelfromValue = (val: T | undefined): string => {
     const option = translatedData.find(el => el.value === val)
     if (option)
-      return option.label
+      return String(option.label)
     else
       return 'error'
   }
