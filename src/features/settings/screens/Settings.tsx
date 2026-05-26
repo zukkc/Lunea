@@ -8,7 +8,7 @@ import { ChartSplineIcon } from 'lucide-react-native';
 
 import { useSettingsStore } from '@/shared/settings/store';
 import { useMakeSetting } from '../hooks/useMakeSetting';
-import { useTranslation } from 'react-i18next'; 
+import { useTranslation } from 'react-i18next';
 
 import { PHOTO_QUALITY } from '../constants/constants';
 import type { QualityPrioritization } from 'react-native-vision-camera';
@@ -26,11 +26,13 @@ const Settings = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
+      
+        {/*///////////////////PROFILE_SETTINGS////////////////////////////*/}
 
         <WriteText
           style={{ color: '#ffffff', textAlign: "center", fontSize: 20 }}
         >
-          {t('settings.profiles.title')} 
+          {t('settings.profiles.title')}
         </WriteText>
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 15 }}>
@@ -51,10 +53,12 @@ const Settings = () => {
           />
         </View>
 
+        {/*///////////////////PHOTO_SETTINGS////////////////////////////*/}
+
         <WriteText
           style={styles.optionsGroupTitle}
         >
-          {t('settings.photo.title')} 
+          {t('settings.photo.title')}
         </WriteText>
 
         <Rounded
