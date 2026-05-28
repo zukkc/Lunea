@@ -22,25 +22,26 @@ import { useSettingsStore } from '@/shared/settings/store';
 const DEFAULT_ZOOM = 2
 
 const Camera = (): React.JSX.Element => {
-  // TODO: SPRAWDZIC CZEMU KOMPONETENT PRZY ROBIENIU ZDJECIA REDNERUJE SIE 2 RAZY
-  // ZWRACA WYSOKOSC DOLNEGO PRZYCISKU NAVIGACJI W TELEFONIE
+  // TODO: Check why this component renders twice when taking a photo
+  
+// Returns the height of the phone's bottom safe area / navigation area
   const { bottom: bottomNavHeight } = useSafeAreaInsets();
 
   // ====================== KAMERA ================== //
 
-  // HOOK ZAJMUJACY SIE OBLSUGA KAMERY JAK ROBIENIE ZDJEC I FILMOW
+  // Handles camera actions such as taking photos and recording videos
   const { outputs, asset, takePhoto } = useCameraCapture();
 
-  // SPRAWDZA CZY NADANE SA PERMISJE
+  // Checks whether camera and microphone permissions are granted
   const { isPermissionsGranted } = useCameraAndMicPermission();
 
-  //SPRAWDZA CZY KAMERA POWINNA BYC AKTYWOWANA
+  // Checks whether the camera should be active
   const isCameraActive = useCameraStore(s => s.isActive);
 
-  // USTAWIA ALBO AUTOMATYCZNIE NAJLEPSZE URZADZENIE
+  // Automatically selects the best available camera device
   const device = useSetupCameraDevice();
   
-  // SYNC DEVICE SNAPSHOT FOR SETTIGNS
+  // Syncs the current device snapshot for settings
   useSyncCameraDeviceSnapshot(device) 
 
   // SETTINGS
@@ -52,12 +53,12 @@ const Camera = (): React.JSX.Element => {
     maxZoom: device?.maxZoom 
   });
 
-  // SPRAWDZA CZY PERMISJE ZOSTALY NADANE
+  // Checks whether permissions have been granted
   if (!isPermissionsGranted) {
     return <HasNoPermissionView />;
   }
 
-  // SPRAWDZA CZY KAMERA W OGOLE FIZYCZNIE ISTNIEJE W URZADZENIU
+  // Checks whether a physical camera device is available
   if (!device) {
     return <View />;
   }

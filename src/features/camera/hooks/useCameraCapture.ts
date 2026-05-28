@@ -18,21 +18,19 @@ type CameraCapture = {
 export const useCameraCapture = (): CameraCapture => {
   const [asset, setAsset] = React.useState<CapturedAsset | null>(null);
 
-  // ======================== USTAWIENIA ========================== //
+  // ======================== SETTINGS ========================== //
 
-  // ZWRACA JAKOSC (KTORA JEST ZAPISANA W USTAWIENIACH) W JAKIEJ MAJA BYC ROBIONE ZDJECIA
+  // Returns the photo quality selected in settings
   const photoQuality = useSettingsStore(s => s.photoQuality);
 
   // ============================================================== //
 
 
-  // ZMIENNA ZAWIERAJACA OUTPUT ZDJECIA 
   const photoOutput = usePhotoOutput({
     qualityPrioritization: photoQuality,
     targetResolution: CommonResolutions.FHD_16_9
   });
 
-  // ZMIENNA ZAWIERAJACA OUTPUT VIDEO
   const videoOutput = useVideoOutput({
     enableAudio: true,
     targetResolution: CommonResolutions.FHD_16_9

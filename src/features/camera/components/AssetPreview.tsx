@@ -3,7 +3,7 @@ import { Pressable, View, StyleSheet } from 'react-native';
 import { NitroImage } from 'react-native-nitro-image';
 import { XIcon } from 'lucide-react-native';
 
-import { CapturedAsset } from '@/src/shared/camera/types';
+import { CapturedAsset } from '@/shared/camera/types';
 
 type AssetPreviewProps = {
   asset: CapturedAsset;
