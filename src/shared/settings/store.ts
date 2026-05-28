@@ -8,19 +8,19 @@ const mmkv = createMMKV({ id: 'settings' });
 export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
-      devicePreference: 'quality',
-      changeDevicePreference: preference =>
-        set(() => ({ devicePreference: preference })),
       deviceSnapshot: null,
+      devicePreference: 'quality',
+      fps: 30,
+      photoQuality: 'speed',
+      cameraPosition: 'front',
       setDeviceSnapshot: snapshot =>
         set(() => ({ deviceSnapshot: snapshot })),
-      fps: 30,
+      changeDevicePreference: preference =>
+        set(() => ({ devicePreference: preference })),
       setFps: (fps) =>
         set({ fps: fps }),
-      photoQuality: 'speed',
       changePhotoQuality: qualityValue =>
         set(() => ({ photoQuality: qualityValue })),
-      cameraPosition: 'front',
       changeCameraPosition: position =>
         set(state => ({
           cameraPosition: position
