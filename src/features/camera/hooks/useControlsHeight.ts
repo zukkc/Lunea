@@ -1,6 +1,6 @@
 import { Dimensions, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { calcSizeUnderCamera } from '../utils/utils';
+import { getSpaceBelowCameraPreview } from '../utils';
 import React, { useState } from 'react';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -18,7 +18,7 @@ export const useControlsHeight = (): ControlsMeasures => {
     const previewHeight = screenWidth * (16 / 9)
 
     return {
-      height: calcSizeUnderCamera(
+      height: getSpaceBelowCameraPreview(
         screenHeight,
         bottomInset,
         previewHeight,

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useSettingsStore } from '@/shared/settings/store'
-import { createCameraDeviceSnapshot } from '../utils/utils'
+import { createCameraDeviceSnapshot } from '../utils'
 import type { CameraDevice } from 'react-native-vision-camera'
 
 export function useSyncCameraDeviceSnapshot(device: CameraDevice | undefined) {
