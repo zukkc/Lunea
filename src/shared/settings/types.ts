@@ -11,15 +11,16 @@ import { CameraDevicePreference } from '../camera/types';
 
 export type SettingsState = {
   devicePreference: CameraDevicePreference;
-  changeDevicePreference: (preference: CameraDevicePreference) => void;
   deviceSnapshot: DeviceSnapshot | null;
-  setDeviceSnapshot: (snapshot: DeviceSnapshot | null) => void
   fps: number
-  setFps: (fps: number) => void
   photoQuality: QualityPrioritization;
-  changePhotoQuality: (qualityValue: QualityPrioritization) => void;
-
+  photoHDR: boolean;
   cameraPosition: CameraPosition;
+  changeDevicePreference: (preference: CameraDevicePreference) => void;
+  setDeviceSnapshot: (snapshot: DeviceSnapshot | null) => void
+  setFps: (fps: number) => void
+  changePhotoQuality: (qualityValue: QualityPrioritization) => void;
+  togglePhotoHDR: () => void;
   changeCameraPosition: (position?: CameraPosition) => void;
 };
 

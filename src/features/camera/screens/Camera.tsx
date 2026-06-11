@@ -63,16 +63,7 @@ const Camera = (): React.JSX.Element => {
     return <View />;
   }
 
-  console.log('SELECTED DEVICE', {
-    id: device?.id,
-    type: device?.type,
-    position: device?.position,
-    isVirtualDevice: device?.isVirtualDevice,
-    physicalDevices: device?.physicalDevices,
-    minZoom: device?.minZoom,
-    maxZoom: device?.maxZoom,
-    zoomLensSwitchFactors: device?.zoomLensSwitchFactors,
-  })
+  console.log(device)
 
   return (
     <View style={{ flex: 1, marginBottom: bottomNavHeight }}>

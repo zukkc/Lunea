@@ -12,6 +12,7 @@ export const useSettingsStore = create<SettingsState>()(
       devicePreference: 'quality',
       fps: 30,
       photoQuality: 'speed',
+      photoHDR: false,
       cameraPosition: 'front',
       setDeviceSnapshot: snapshot =>
         set(() => ({ deviceSnapshot: snapshot })),
@@ -21,6 +22,8 @@ export const useSettingsStore = create<SettingsState>()(
         set({ fps: fps }),
       changePhotoQuality: qualityValue =>
         set(() => ({ photoQuality: qualityValue })),
+      togglePhotoHDR: () =>
+        set(state => ({ photoHDR: !state.photoHDR })),
       changeCameraPosition: position =>
         set(state => ({
           cameraPosition: position
@@ -41,6 +44,7 @@ export const useSettingsStore = create<SettingsState>()(
         devicePreference: state.devicePreference,
         fps: state.fps,
         photoQuality: state.photoQuality,
+        photoHDR: state.photoHDR,
         cameraPosition: state.cameraPosition,
       }),
     },

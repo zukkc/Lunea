@@ -23,13 +23,18 @@ const Settings = () => {
   const fps = useSettingsStore(s => s.fps);
   const setFps = useSettingsStore(s => s.setFps);
 
-  const photoQuality = useSettingsStore(s => s.photoQuality)
-  const changePhotoQuality = useSettingsStore(s => s.changePhotoQuality)
+  const photoQuality = useSettingsStore(s => s.photoQuality);
+  const changePhotoQuality = useSettingsStore(s => s.changePhotoQuality);
+  
+  const photoHDR = useSettingsStore(s => s.photoHDR);
+  const togglePhotoHDR = useSettingsStore(s => s.togglePhotoHDR);
 
   if (!deviceSnapshot) return;
 
   const [fpsTitleKey, availableFps] = makeSetting(deviceSnapshot.supportedFpsValues, 'settings.general.fps')
-  const [photoTitleKey, photoQualityData] = makeSetting(PHOTO_QUALITY, 'settings.photo.quality')
+  const [photoQualityTitleKey, photoQualityData] = makeSetting(PHOTO_QUALITY, 'settings.photo.quality')
+  
+  console.log(photoHDR)
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -72,6 +77,7 @@ const Settings = () => {
           style={styles.optionContainer}
         >
           <SettingOption<number>
+            variant='list'
             titleKey={fpsTitleKey}
             value={fps}
             data={availableFps}
@@ -95,7 +101,8 @@ const Settings = () => {
           style={styles.optionContainer}
         >
           <SettingOption<QualityPrioritization>
-            titleKey={photoTitleKey}
+            variant='list'
+            titleKey={photoQualityTitleKey}
             value={photoQuality}
             data={photoQualityData}
             onChange={quality => changePhotoQuality(quality)}
@@ -104,6 +111,15 @@ const Settings = () => {
           />
 
           <Divider marginV={20} thickness={0.5} color="#bbbbbb" />
+
+           <SettingOption<boolean>
+            variant='switch'
+            titleKey='settings.photo.hdr.title'
+            value={photoHDR}
+            onChange={e => togglePhotoHDR()}
+            LeftIcon={ChartSplineIcon}
+            leftIconSize={22}
+          />
 
         </Rounded>
       </View>

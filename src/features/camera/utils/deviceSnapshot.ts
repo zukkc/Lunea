@@ -14,6 +14,7 @@ export function createCameraDeviceSnapshot(device: CameraDevice) {
     minZoom: device.minZoom,
     maxZoom: device.maxZoom,
 
+    supportPhotoHDR: device.supportsPhotoHDR,
     supportedFpsValues: getCommonSupportedFpsValues(device),
 
     physicalDevices: physicalDevices.map((physicalDevice) => ({

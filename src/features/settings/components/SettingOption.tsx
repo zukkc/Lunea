@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Switch } from 'react-native';
 import { WriteText } from '../../../shared/ui/WriteText';
 import { Dropdown } from 'react-native-element-dropdown';
 import { BlurViewManager } from '@/shared/ui';
@@ -10,66 +10,92 @@ import { useTranslation } from 'react-i18next';
 import type { OptionType } from '@/shared/settings/types';
 import type { LucideIcon } from 'lucide-react-native';
 
-type SettingOptionProps<T> = {
-  value: T;
-  data: Array<OptionType<T>>;
-  rawData?: boolean
+type SettingOptionProps<T> = ListProps<T> | SwitchProps;
+
+type BaseProps = {
   titleKey: string;
   LeftIcon?: LucideIcon;
   leftIconSize?: number;
+};
+
+type ListProps<T> = BaseProps & {
+  variant: 'list';
+  value: T;
+  data: Array<OptionType<T>>;
+  rawData?: boolean;
   onChange: (value: T) => void;
 };
 
-const SettingOption = <T,>({
-  value,
-  data,
-  rawData = false,
-  titleKey,
-  LeftIcon,
-  leftIconSize = 30,
-  onChange,
-}: SettingOptionProps<T>): React.JSX.Element | null => {
+type SwitchProps = BaseProps & {
+  variant: 'switch';
+  value: boolean;
+  onChange: (value: boolean) => void;
+};
+
+const SettingOption = <T,>(
+  props: SettingOptionProps<T>,
+): React.JSX.Element | null => {
   const { t } = useTranslation();
 
-  const translatedData = React.useMemo(() =>
-    data.map(option => ({
-      ...option,
-      label: rawData ? option.value: t(option.i18nKey),
-    })),
-    [data, t],
-  );
-  
+  const {
+    titleKey,
+    LeftIcon,
+    leftIconSize = 30,
+  } = props;
+
   const translatedTitle = React.useMemo(() => {
     return t(titleKey);
-  }, [titleKey, t]) 
+  }, [titleKey, t]);
 
   const renderLeftIcon = (): React.JSX.Element | null => {
     if (!LeftIcon) return null;
+
     return (
-      <LeftIcon style={styles.icon} color={'#aaaaaa'} size={leftIconSize} />
+      <LeftIcon style={styles.icon} color="#aaaaaa" size={leftIconSize} />
     );
   };
 
-  const findLabelfromValue = (val: T | undefined): string => {
-    const option = translatedData.find(el => el.value === val)
-    if (option)
-      return String(option.label)
-    else
-      return 'error'
+  const renderHeader = () => (
+    <View
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      {renderLeftIcon()}
+      <WriteText style={styles.titleText}>{translatedTitle}</WriteText>
+    </View>
+  );
+
+  if (props.variant === 'switch') {
+    return (
+      <View style={styles.container}>
+        {renderHeader()}
+
+        <View style={{ padding: 10 }}>
+          <Switch
+            value={props.value}
+            onValueChange={props.onChange}
+          />
+        </View>
+      </View>
+    );
   }
-  
+
+  const translatedData = props.data?.map(option => ({
+    ...option,
+    label: props.rawData ? String(option.value) : t(option.i18nKey),
+  }));
+
+  const findLabelFromValue = (val: T): string => {
+    const option = translatedData.find(el => el.value === val);
+    return option ? String(option.label) : 'error';
+  };
+
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        {renderLeftIcon()}
-        <WriteText style={styles.titleText}>{translatedTitle}</WriteText>
-      </View>
+      {renderHeader()}
 
       <View style={styles.dropDownContainer}>
         <Dropdown
@@ -78,21 +104,20 @@ const SettingOption = <T,>({
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
           selectedTextProps={{ numberOfLines: 1, ellipsizeMode: 'tail' }}
-          activeColor='rgba(0,0,0,0.3)'
+          activeColor="rgba(0,0,0,0.3)"
           fontFamily="Exo2-regular"
           data={translatedData}
           showsVerticalScrollIndicator={false}
           maxHeight={300}
           labelField="label"
           valueField="value"
-          value={value}
+          value={props.value}
           onChange={(item: OptionType<T>) => {
-            onChange(item.value);
+            props.onChange(item.value);
           }}
           renderRightIcon={() => (
-            <ChevronDown style={styles.icon} color={'#aaaaaa'} size={25} />
-          )
-          }
+            <ChevronDown style={styles.icon} color="#aaaaaa" size={25} />
+          )}
           renderItem={(item: OptionType<T>) => (
             <View style={styles.itemStyle}>
               <BlurViewManager
@@ -100,10 +125,11 @@ const SettingOption = <T,>({
                 blurType="prominent"
                 blurAmount={40}
               />
-              <WriteText style={styles.itemText}>{findLabelfromValue(item.value)}</WriteText>
+              <WriteText style={styles.itemText}>
+                {findLabelFromValue(item.value)}
+              </WriteText>
             </View>
-          )
-          }
+          )}
         />
       </View>
     </View>
