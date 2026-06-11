@@ -21,6 +21,9 @@ export const en = {
         balanced: 'Balanced',
         quality: 'Quality',
       },
+      hdr: {
+        title: "HDR" 
+      }
     }
   },
 };
