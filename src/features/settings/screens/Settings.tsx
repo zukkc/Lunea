@@ -1,5 +1,5 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import Divider from '../components/Divider';
 import SettingOption from '../components/SettingOption';
 import ProfileButton from '../components/ProfileButton';
@@ -48,7 +48,7 @@ const Settings = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
 
         {/*///////////////////PROFILE_SETTINGS////////////////////////////*/}
 
@@ -157,7 +157,7 @@ const Settings = () => {
           />
 
         </Rounded>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
