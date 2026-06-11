@@ -10,8 +10,8 @@ import { useSettingsStore } from '@/shared/settings/store';
 import { makeSetting } from '../utils/utils';
 import { useTranslation } from 'react-i18next';
 
-import { PHOTO_QUALITY } from '../constants/constants';
-import type { QualityPrioritization } from 'react-native-vision-camera';
+import { PHOTO_QUALITY, VIDEO_STABILIZATION } from '../constants/constants';
+import type { QualityPrioritization, StabilizationMode } from 'react-native-vision-camera';
 
 const Settings = () => {
   const { t } = useTranslation();
@@ -23,16 +23,26 @@ const Settings = () => {
   const fps = useSettingsStore(s => s.fps);
   const setFps = useSettingsStore(s => s.setFps);
 
+  //photo
   const photoQuality = useSettingsStore(s => s.photoQuality);
   const changePhotoQuality = useSettingsStore(s => s.changePhotoQuality);
   
   const photoHDR = useSettingsStore(s => s.photoHDR);
   const togglePhotoHDR = useSettingsStore(s => s.togglePhotoHDR);
+  
+  //video
+  const videoStabilizationMode = useSettingsStore(s => s.videoStabilizationMode)
+  const setVideoStabilizationMode = useSettingsStore(s => s.setVideoStabilizationMode)
+  
 
   if (!deviceSnapshot) return;
 
+  // photo
   const [fpsTitleKey, availableFps] = makeSetting(deviceSnapshot.supportedFpsValues, 'settings.general.fps')
   const [photoQualityTitleKey, photoQualityData] = makeSetting(PHOTO_QUALITY, 'settings.photo.quality')
+  
+  // video
+  const [videoStabilizationTitleKey, videoStabilizationData] = makeSetting(VIDEO_STABILIZATION, 'settings.video.stabilization')
   
   console.log(photoHDR)
 
@@ -117,6 +127,31 @@ const Settings = () => {
             titleKey='settings.photo.hdr.title'
             value={photoHDR}
             onChange={e => togglePhotoHDR()}
+            LeftIcon={ChartSplineIcon}
+            leftIconSize={22}
+          />
+
+        </Rounded>
+        
+        
+        {/*///////////////////VIDEO_SETTINGS////////////////////////////*/}
+
+        <WriteText
+          style={styles.optionsGroupTitle}
+        >
+          {t('settings.video.title')}
+        </WriteText>
+
+        <Rounded
+          rounded={30}
+          style={styles.optionContainer}
+        >
+          <SettingOption<StabilizationMode>
+            variant='list'
+            titleKey={videoStabilizationTitleKey}
+            value={videoStabilizationMode}
+            data={videoStabilizationData}
+            onChange={mode => setVideoStabilizationMode(mode)}
             LeftIcon={ChartSplineIcon}
             leftIconSize={22}
           />

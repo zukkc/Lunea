@@ -46,6 +46,7 @@ const Camera = (): React.JSX.Element => {
 
   // SETTINGS
   const chosenFps = useSettingsStore(s => s.fps); 
+  const stabilizationMode = useSettingsStore(s => s.videoStabilizationMode);
 
   const { zoom, setZoom } = useCameraZoom({ 
     initialZoom: DEFAULT_ZOOM, 
@@ -64,6 +65,7 @@ const Camera = (): React.JSX.Element => {
   }
 
   console.log(device)
+  console.log(stabilizationMode)
 
   return (
     <View style={{ flex: 1, marginBottom: bottomNavHeight }}>
@@ -81,7 +83,8 @@ const Camera = (): React.JSX.Element => {
           constraints={[
             { resolutionBias: outputs[0] }, // index 0 is cameraOutput
             { resolutionBias: outputs[1] }, // index 1 is photoOutput
-            { fps: chosenFps }
+            { fps: chosenFps },
+            { videoStabilizationMode: stabilizationMode } 
           ]}
           zoom={zoom}
         />

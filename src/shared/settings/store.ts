@@ -13,6 +13,7 @@ export const useSettingsStore = create<SettingsState>()(
       fps: 30,
       photoQuality: 'speed',
       photoHDR: false,
+      videoStabilizationMode: 'standard',
       cameraPosition: 'front',
       setDeviceSnapshot: snapshot =>
         set(() => ({ deviceSnapshot: snapshot })),
@@ -24,6 +25,8 @@ export const useSettingsStore = create<SettingsState>()(
         set(() => ({ photoQuality: qualityValue })),
       togglePhotoHDR: () =>
         set(state => ({ photoHDR: !state.photoHDR })),
+      setVideoStabilizationMode: (mode) =>
+        set(() => ({ videoStabilizationMode: mode })),
       changeCameraPosition: position =>
         set(state => ({
           cameraPosition: position

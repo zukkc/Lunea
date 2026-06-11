@@ -14,7 +14,7 @@ export const pl = {
       }
     },
     photo: {
-      title: 'zdjęcia',
+      title: 'Zdjęcia',
       quality: {
         title: 'Jakość zdjęć',
         speed: 'Szybkość',
@@ -25,5 +25,17 @@ export const pl = {
         title: "HDR" 
       }
     },
+    video: {
+      title: 'Wideo',
+      stabilization: {
+        title: 'Stabilizacja',
+        standard: 'Standardowa',
+        cinematic: 'Kinowa',
+        "cinematic-extended": 'Rozszerzona Kinowa',
+        "preview-optimized": 'Zoptymalizowany podgląd',  
+        "cinematic-extended-enhanced": 'Ulepszona rozszerzona Kinowa',
+        "low-latency": 'Z niskim opóźnieniem',
+      }
+    }
   },
 };

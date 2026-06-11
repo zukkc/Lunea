@@ -5,6 +5,7 @@ import type {
   Range,
   PixelFormat,
   DynamicRange,
+  StabilizationMode,
 } from 'react-native-vision-camera';
 
 import { CameraDevicePreference } from '../camera/types';
@@ -15,12 +16,14 @@ export type SettingsState = {
   fps: number
   photoQuality: QualityPrioritization;
   photoHDR: boolean;
+  videoStabilizationMode: StabilizationMode;
   cameraPosition: CameraPosition;
   changeDevicePreference: (preference: CameraDevicePreference) => void;
   setDeviceSnapshot: (snapshot: DeviceSnapshot | null) => void
   setFps: (fps: number) => void
   changePhotoQuality: (qualityValue: QualityPrioritization) => void;
   togglePhotoHDR: () => void;
+  setVideoStabilizationMode: (mode: StabilizationMode) => void;
   changeCameraPosition: (position?: CameraPosition) => void;
 };
 

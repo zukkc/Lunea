@@ -22,7 +22,19 @@ export const en = {
         quality: 'Quality',
       },
       hdr: {
-        title: "HDR" 
+        title: "HDR"
+      }
+    },
+    video: {
+      title: 'Video',
+      stabilization: {
+        title: 'Stabilization',
+        standard: 'Standart',
+        cinematic: 'Cinematic',
+        "cinematic-extended": 'Cinematic extended',
+        "preview-optimized": 'Preview optimized',
+        "cinematic-extended-enhanced": 'Cinamatic extended enhanced',
+        "low-latency": 'Low latency',
       }
     }
   },
